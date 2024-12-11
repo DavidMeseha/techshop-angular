@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.example.com', // Production API URL
+  apiUrl: 'https://all-in-one-my-shop-back.vercel.app',
   featureFlag: false,
 };
