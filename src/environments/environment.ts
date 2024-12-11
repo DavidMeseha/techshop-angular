@@ -1,5 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:3000', // Development API URL
-  featureFlag: true,
+  production: true,
+  apiUrl: 'https://all-in-one-my-shop-back.vercel.app',
 };
