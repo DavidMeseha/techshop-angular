@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SideNavComponent } from './layout/side-nav/side-nav.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { BottomNavComponent } from './layout/bottom-nav/bottom-nav.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+    SideNavComponent,
+    HeaderComponent,
+    BottomNavComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'techshop-angular';
-}
+export class AppComponent {}
