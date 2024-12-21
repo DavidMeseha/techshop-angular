@@ -1,10 +1,9 @@
 // import en from "@/dictionaries/en.json";
 export type FieldError = string | false;
 
-export type Language = "en" | "ar" | "fr";
+export type Language = 'en' | 'ar' | 'fr';
 
 // export type Translation = typeof en;
-
 export interface Pagination {
   current: number;
   limit: number;
@@ -44,6 +43,14 @@ export interface User {
   imageUrl: string;
   _id: string;
   language: Language;
+}
+
+export interface UserAllActions {
+  reviews: string[];
+  cart: { product: string; quantity: number }[];
+  likes: string[];
+  saves: string[];
+  follows: string[];
 }
 
 export interface Review {
@@ -386,7 +393,7 @@ export interface RegisterForm {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: "male" | "female" | string;
+  gender: 'male' | 'female' | string;
   firstName: string;
   lastName: string;
   dayOfBirth: number;

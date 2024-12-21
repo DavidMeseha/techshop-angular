@@ -12,28 +12,37 @@
         <!-- <BiSearch size={25} /> -->
       </button>
 
-      <a class="rounded-sm bg-primary px-4 py-2 text-white" routerLink="/login">
+      <a
+        *ngIf="!user?.isRegistered"
+        class="rounded-sm bg-primary px-4 py-2 text-white"
+        routerLink="/login"
+      >
         <span class="mx-4 whitespace-nowrap text-[15px] font-medium"
           >login</span
         >
       </a>
-      <div class="me-4 flex items-center">
+      <div *ngIf="user && user.isRegistered" class="me-4 flex items-center">
         <div class="relative">
-          <button class="mt-1 rounded-full border border-primary-300">
-            <img class="h-[35px] w-[35px] rounded-full" />
+          <button
+            (click)="toggleMenu()"
+            class="mt-1 rounded-full border border-primary-300"
+          >
+            <img [src]="user.imageUrl" class="h-[35px] w-[35px] rounded-full" />
           </button>
 
           <div
+            *ngIf="showUserMenu"
             class="absolute end-0 top-12 w-[200px] rounded-lg border bg-white shadow-xl"
           >
-            <button class="flex w-full gap-1 px-2 py-3 hover:bg-gray-100">
-              <!-- <BiUser size="20" /> -->
+            <button class="flex w-full gap-2 px-2 py-3 hover:bg-gray-100">
+              <i class="bi-person-fill-exclamation"></i>
               <span class="text-sm font-semibold">profile</span>
             </button>
             <button
-              class="flex w-full gap-1 border-t px-2 py-3 hover:bg-gray-100"
+              (click)="onLogoutClick()"
+              class="flex w-full gap-2 border-t px-2 py-3 hover:bg-gray-100"
             >
-              <!-- <FiLogOut size={20} /> -->
+              <i class="bi-box-arrow-left"></i>
               <span class="text-sm font-semibold">logout</span>
             </button>
           </div>

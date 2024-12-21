@@ -1,24 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../../ui/button/button.component';
 import { DataService } from '../../../services/fetch.service';
-import { IFullProduct } from '../../../../types';
+import { IFullProduct, User } from '../../../../types';
 import { ProductCardComponent } from '../../../ui/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { login } from '../../../store/user/user.actions';
+import {
+  selectUser,
+  selectUserActions,
+} from '../../../store/user/user.selectors';
+import { UserState } from '../../../store/app.state';
 
 @Component({
   selector: 'app-home-page',
   imports: [ProductCardComponent, ButtonComponent, CommonModule],
   templateUrl: './home-page.component.html',
 })
-export class HomePageComponent implements OnInit {
-  isloadingMore = true;
+export class HomePageComponent {
+  isloadingMore = false;
   products: IFullProduct[] = [];
   lastPage = 1;
   hasNext = true;
+  user: User | null = null;
 
-  constructor(private dataService: DataService) {}
+  userActions: {
+    saves: string[];
+    likes: string[];
+    cart: { product: string; quantity: number }[];
+  } = {
+    likes: [],
+    saves: [],
+    cart: [],
+  };
+
+  constructor(
+    private dataService: DataService,
+    private store: Store<{ user: UserState }>
+  ) {
+    this.store.select(selectUser).subscribe((res) => {
+      this.user = res;
+    });
+
+    this.store.select(selectUserActions).subscribe((res) => {
+      this.userActions.saves = res.saves;
+      this.userActions.likes = res.likes;
+      this.userActions.cart = res.carts;
+      console.log(res);
+    });
+  }
 
   async loadMoreClick() {
+    this.store.dispatch(login({ password: '', email: '' }));
     this.isloadingMore = true;
     this.lastPage += 1;
     this.loadData(this.lastPage);
@@ -46,5 +80,15 @@ export class HomePageComponent implements OnInit {
           this.isloadingMore = false;
         },
       });
+  }
+
+  productIsInCart(product: IFullProduct) {
+    console.log(
+      this.userActions.cart.find((item) => {
+        console.log(item.product === product._id);
+        return product._id === item.product;
+      })
+    );
+    return !!this.userActions.cart.find((item) => product._id === item.product);
   }
 }

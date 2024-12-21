@@ -1,4 +1,25 @@
 import { Routes } from '@angular/router';
-import { HomePageComponent } from './pages/home/home-page/home-page.component';
 
-export const routes: Routes = [{ path: '', component: HomePageComponent }];
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () =>
+      import('./pages/home/home-page/home-page.component').then(
+        (m) => m.HomePageComponent
+      ),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/auth/login-page/login-page.component').then(
+        (m) => m.LoginPageComponent
+      ),
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./pages/auth/register-page/register-page.component').then(
+        (m) => m.RegisterPageComponent
+      ),
+  },
+];
